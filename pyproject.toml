@@ -1,0 +1,43 @@
+[tool.poetry]
+name = "madr"
+version = "0.1.0"
+description = ""
+authors = ["GiovanniLMTenereli <giovannilmtenereli@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+fastapi = {extras = ["standard"], version = "^0.115.6"}
+sqlalchemy = "^2.0.36"
+pydantic-settings = "^2.7.0"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.3.4"
+pytest-cov = "^6.0.0"
+taskipy = "^1.14.1"
+ruff = "^0.8.4"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.ruff]
+line-length = 80
+extend-exclude = ['migrations']
+
+[tool.ruff.lint]
+preview = true
+select = ['I', 'F', 'E', 'W', 'PL', 'PT']
+
+[tool.ruff.format]
+preview = true
+
+[tool.pytest.ini_options]
+pythonpath = "."
+addopts = '-p no:warnings'
+
+[tool.taskipy.tasks]
+format = 'ruff check . --fix & ruff format .'
+run = 'fastapi dev madr/app.py'
+test = 'pytest -s -x --cov=madr -vv'
+post_test = 'coverage html'

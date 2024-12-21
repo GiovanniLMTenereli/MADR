@@ -1,0 +1,10 @@
+from pydantic import BaseModel
+
+class WriterSchema(BaseModel):
+    name: str
+
+class ReturnableWriter(WriterSchema):
+    id: int
+
+class WriterList(BaseModel):
+    writers: list[ReturnableWriter]
